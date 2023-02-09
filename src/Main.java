@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.Scanner;
 public class Main {
@@ -23,15 +24,60 @@ public class Main {
             String contraseña = teclado.next();
             boolean funcionamiento;
             funcionamiento= true;
+            int longitud=3;
             while(funcionamiento==true){
                 System.out.println("Que desea hacer?");
-                System.out.println("1.Crear una carrera");
-                System.out.println("2.Crear una materia");
-                System.out.println("3.Crear un grupo");
-                System.out.println("Cuantas carreras desea crear");
-                int longitud = teclado.nextInt();
-                Carreras= new String[longitud];
+                System.out.println("1.Crear carrera");
+                System.out.println("2.Crear materia");
+                System.out.println("3.Crear grupo");
+                System.out.println("4.Salir");
+                opcion= teclado.nextInt();
+                if (opcion==1){
+                    System.out.println("Cuantas carreras desea crear");
+                    longitud = teclado.nextInt();
+                    Carreras= new String[longitud];
+                    for (int i=0;i<longitud;i++) {
+                        System.out.println("Ingrese el nombre de la carrera");
+                        Carreras[i] = teclado.next();
+                    }
+                    opcion=2;
+                }
+                if (opcion==2){
+                    String CarrerasPrint = Arrays.toString(Carreras);
+                    System.out.println(CarrerasPrint);
+                    System.out.println("Cuantas materias quiere crear por carrera");
+                    longitud = teclado.nextInt();
+                    Materias= new String [Carreras.length][longitud];
+                    for (int i=0;i< Carreras.length;i++){
+                        System.out.println("Ingrese las materias para la carrera: "+Carreras[i]);
+                        for (int j=0;j<longitud;j++){
+                            Materias[i][j]=teclado.next();
+                        }
+                    }
+                    System.out.println("[");
+                    for (int i=0;i< Carreras.length;i++){
+                        for (int j=0;j<longitud;j++){
+                            System.out.println(Materias[i][j]+" ");
+                        }
+                        System.out.println("");
+                    }
+                    System.out.println("]");
+                    opcion=3;
+                }
+                if (opcion==3){
+                    System.out.println("Ingrese cuantos grupos tendran las materias");
+                    int longitud1 = teclado.nextInt();
+                    Grupos=new int[longitud+1][longitud1];
+                    for (int i =0;i<longitud1;i++){
+                        Grupos[0][i]=i+1;
+                    }
+                    for (int i=1;i<longitud;i++){
 
+                    }
+                    }
+                if (opcion==4){
+                    funcionamiento=false;
+                }
             }
         }
         if (opcion==2){
