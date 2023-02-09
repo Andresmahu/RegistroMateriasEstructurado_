@@ -54,14 +54,12 @@ public class Main {
                             Materias[i][j]=teclado.next();
                         }
                     }
-                    System.out.println("[");
                     for (int i=0;i< Carreras.length;i++){
                         for (int j=0;j<longitud;j++){
-                            System.out.println(Materias[i][j]+" ");
+                            System.out.print(Materias[i][j]+" ");
                         }
                         System.out.println("");
                     }
-                    System.out.println("]");
                     opcion=3;
                 }
                 if (opcion==3){
@@ -72,10 +70,23 @@ public class Main {
                         Grupos[0][i]=i+1;
                     }
                     for (int i=1;i<longitud;i++){
-
+                        for(int j=0; j<longitud1;j++){
+                            if(j==0){
+                                System.out.println("Ingrese el número de cupos para cada grupo de la materia: "+Materias[i-1][j]);
+                            }
+                            Grupos[i][j]=teclado.nextInt();
+                        }
+                    }
+                    System.out.println();
+                    for (int i=0;i<longitud+1;i++){
+                        for (int j=0;j<longitud1;j++){
+                            System.out.print(Grupos[i][j]+" ");
+                        }
+                        System.out.println("");
                     }
                     }
                 if (opcion==4){
+                    System.out.println("Proceso finalizado con exito");
                     funcionamiento=false;
                 }
             }
