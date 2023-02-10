@@ -22,36 +22,27 @@ public class Main {
         while(funcionamientoCrear==true){
             System.out.println("Que desea hacer?");
             System.out.println("1.Crear carrera");
-            System.out.println("2.Crear materia");
-            System.out.println("3.Crear grupo");
-            System.out.println("4.Salir");
+            System.out.println("2.Salir");
             int opcion= teclado.nextInt();
             if (opcion==1){
                 System.out.println("Cuantas carreras desea crear");
                 longitudcarrera = teclado.nextInt();
                 Carreras= new String[longitudcarrera];
                 for (int i=0;i<longitudcarrera;i++) {
-                    System.out.println("Ingrese el nombre de la carrera");
+                    System.out.println("Ingrese el nombre de la carrera (sin poner espacios)");
                     Carreras[i] = teclado.next();
                 }
-                opcion=2;
-            }
-            if (opcion==2){
                 String CarrerasPrint = Arrays.toString(Carreras);
                 System.out.println(CarrerasPrint);
                 System.out.println("Cuantas materias quiere crear por carrera");
                 longitudmateria = teclado.nextInt();
                 Materias= new String [Carreras.length][longitudmateria];
                 for (int i=0;i< Carreras.length;i++){
-                    System.out.println("Ingrese las materias para la carrera: "+Carreras[i]);
+                    System.out.println("Ingrese las materias para la carrera (sin poner espacios): "+Carreras[i]);
                     for (int j=0;j<longitudmateria;j++){
                         Materias[i][j]=teclado.next();
                     }
                 }
-
-                opcion=3;
-            }
-            if (opcion==3){
                 for (int i=0;i< Carreras.length;i++){
                     for (int j=0;j<longitudmateria;j++){
                         System.out.print(Materias[i][j]+", ");
@@ -60,34 +51,35 @@ public class Main {
                 }
                 System.out.println("Ingrese cuantos grupos tendran las materias");
                 longitudgrupo = teclado.nextInt();
-                Grupos=new int[longitudmateria+1][longitudgrupo];
+                Grupos=new int[(longitudmateria* Carreras.length)+1][longitudgrupo];
                 for (int i =0;i<longitudgrupo;i++){
                     Grupos[0][i]=i+1;
                 }
-                for (int i=1;i<longitudmateria;i++){
+                int indice=0;
+                for (int i=1;i<(longitudmateria* Carreras.length)+1;i++){
                     for(int j=0; j<longitudgrupo;j++){
                         if(j==0){
-                            System.out.println("Ingrese el número de cupos para cada grupo de la materia: "+Materias[i-1][j]);
+                            System.out.println("Ingrese el número de cupos para cada grupo de cada materia: ");
                         }
                         Grupos[i][j]=teclado.nextInt();
                     }
+                    indice=indice+1;
                 }
                 System.out.println();
-                for (int i=0;i<longitudmateria+1;i++){
+                for (int i=0;i<(longitudmateria* Carreras.length)+1;i++){
                     for (int j=0;j<longitudgrupo;j++){
                         System.out.print(Grupos[i][j]+", ");
                     }
                     System.out.println("");
                 }
             }
-            if (opcion==4){
+
+            if (opcion==2){
                 System.out.println("Proceso finalizado con exito");
                 funcionamientoInscribir=true;
                 funcionamientoCrear=false;
             }
         }
-
-
         while (funcionamientoInscribir==true){
             System.out.println("Escoja para cual carrera desea inscribir materias");
             for (int i=1;i<Carreras.length+1;i++){
@@ -99,7 +91,7 @@ public class Main {
                     System.out.print("[");
                     int indice=1;
                     for (int j=0;j<longitudmateria;j++){
-                        System.out.print(indice+"."+Materias[i][j]+", ");
+                        System.out.print(indice+"."+Materias[i-1][j]+", ");
                         indice=indice+1;
                     }
                     System.out.println("]");
@@ -109,47 +101,38 @@ public class Main {
                     for (int k=0;k<longitudhorario;k++){
                         System.out.println("Ingrese el indice de la materia a inscribir");
                         int a= teclado.nextInt();
-                        horariomaterias[k]=Materias[i][a-1];
+                        horariomaterias[k]=Materias[i-1][a-1];
                     }
-                    System.out.println("Estos son los grupos de cada materia elegida y sus respectivos cupos");
+                    System.out.println("Estos son los grupos de cada materia elegida");
                     for (int j=0;j<longitudgrupo;j++){
-                        System.out.println(Grupos[0][j]+" ");
+                        System.out.print(Grupos[0][j]+" ");
                     }
-                    indice=0;
-                    for (int j=0;j<longitudmateria;j++){
-                        for (int k=0;k<longitudgrupo;k++){
-                            if(horariomaterias[indice]==Materias[i][j]){
-                                System.out.print(Grupos[j+1][k]+" ");
-                            }
-                        }
-                        indice=indice+1;
-                        if(indice==horariomaterias.length){
-                            break;
-                        }
-                    }
+                    System.out.println();
                     int horariogrupos[]=new int[longitudhorario];
                     indice=0;
                     int indicehorario=0;
                     for (int j=0;j<longitudmateria;j++){
-                        for (int l=0;l<longitudgrupo;l++){
-                            if(horariomaterias[indice]==Materias[i][j]){
+                        if(indicehorario==horariogrupos.length){
+                            break;
+                        }
+                        if(indice==horariomaterias.length){
+                            break;
+                        }
+                        for (int l=0;l<longitudhorario;l++) {
+                            if (horariomaterias[indice] == Materias[i - 1][j]) {
                                 System.out.println("Indique en que grupo desea inscribirse");
-                                int a= teclado.nextInt();
-                                if(Grupos[j+1][a-1]==0){
+                                int a = teclado.nextInt();
+                                if (Grupos[j + 1][a - 1] == 0) {
                                     System.out.println("No quedan cupos en este grupo,seleccione otro");
-                                    a= teclado.nextInt();
+                                    a = teclado.nextInt();
                                 }
-                                if(Grupos[j+1][a-1]!=0){
-                                    horariogrupos[indicehorario]=Grupos[0][a-1];
-                                    indicehorario=indicehorario+1;
+                                if (Grupos[j + 1][a - 1] != 0) {
+                                    horariogrupos[indicehorario] = Grupos[0][a - 1];
+                                    indicehorario = indicehorario + 1;
                                 }
                             }
                         }
                         indice=indice+1;
-                        if(indice==horariomaterias.length){
-                            break;
-                        }
-
                     }
                     System.out.println("Estas son sus materias y sus grupos");
                     for (int j=0;j<longitudhorario;j++){
@@ -163,7 +146,4 @@ public class Main {
                 }
             }
         }
-
-
-
     }
